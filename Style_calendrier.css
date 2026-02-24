@@ -1,0 +1,8 @@
+.calendrier { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 12px; }
+.calendrier th, .calendrier td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+.header-vac { background-color: #7f7f7f; color: white; }
+.header-a { background: linear-gradient(to bottom, #d98d00, #ffb326); color: white; }
+.header-b { background: linear-gradient(to bottom, #0070c0, #33a1de); color: white; }
+.header-c { background: linear-gradient(to bottom, #70ad47, #92d050); color: white; }
+.academies td { background-color: #fef4e8; font-style: italic; }
+tbody th { background-color: #f2f2f2; text-align: left; width: 150px; }
