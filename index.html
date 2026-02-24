@@ -1,14 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mon Portail Personnel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-card {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            background: var(--primary-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+            background: #1d4ed8;
+        }
+
+        .btn-alt {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-alt:hover {
+            background: #f1f5f9;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
-    <h1><a href="Momento.html"> vers momento </a></h1>
-    <h1><a href="CV.html"> vers CV </a></h1>
-    <h1><a href="Exercice2.html"> EXERCICE2 </a></h1>
+
+    <div class="container">
+        <h1>Bienvenue sur mon espace</h1>
+        
+        <nav class="nav-card">
+            <a href="Momento.html" class="btn"> TP1 </a>
+            <a href="CV.html" class="btn "> TP2 </a>
+            <a href="Exercice2.html" class="btn"> TP3 </a>
+            <a href="TP4.html" class="btn"> TP4 </a>
+            <a href="TP5.html" class="btn"> TP5 </a>
+        </nav>
+    </div>
+
 </body>
 </html>
-
