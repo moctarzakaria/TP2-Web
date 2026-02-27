@@ -9,7 +9,21 @@
     <link rel="stylesheet" href="style/style_exo2.css">
     <link rel="stylesheet" href="style/style_exo3.css">
 </head>
+<script>
+function afficherExo(id){
+    document.querySelectorAll(".exercice").forEach(function(section){
+        section.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
+}
+</script>
 <body>
+    <div class="menu">
+    <button onclick="afficherExo('exo1')">Exercice 1</button>
+    <button onclick="afficherExo('exo2')">Exercice 2</button>
+    <button onclick="afficherExo('exo3')">Exercice 3</button>
+</div>
+<div id="exo1" class="exercice">
 <table>
 
 <tr>
@@ -84,9 +98,10 @@
     </td>
 </tr>
 </table>
+</div>
 </body>
 
-    <details>
+    <div id="exo2" class="exercice">
         <summary>2. EXERCICE 2 : COMPARATIF DES LANGAGES DE SCRIPT</summary>
         <div class="content">
             <table class="table-langages">
@@ -141,21 +156,19 @@
                 </tbody>
             </table>
         </div>
-    </details>
+   </div>
 
-<details>
+<div id="exo3" class="exercice">
     <summary>3. EXERCICE 3 : CALENDRIER AVRIL 2024</summary>
 
     <div class="content">
 
         <table>
 
-            <!-- Titre -->
             <tr>
                 <th colspan="7" class="titre">Avril 2024</th>
             </tr>
 
-            <!-- Jours -->
             <tr class="jours">
                 <th>Lu</th>
                 <th>Ma</th>
@@ -166,7 +179,6 @@
                 <th>Di</th>
             </tr>
 
-            <!-- Semaine 1 -->
             <tr>
                 <td>1</td>
                 <td>2</td>
@@ -177,7 +189,6 @@
                 <td class="weekend">7</td>
             </tr>
 
-            <!-- Semaine 2 -->
             <tr>
                 <td>8</td>
                 <td>9</td>
@@ -188,7 +199,6 @@
                 <td class="weekend">14</td>
             </tr>
 
-            <!-- Semaine 3 -->
             <tr>
                 <td>15</td>
                 <td>16</td>
@@ -199,7 +209,6 @@
                 <td class="weekend">21</td>
             </tr>
 
-            <!-- Semaine 4 -->
             <tr>
                 <td>22</td>
                 <td>23</td>
@@ -210,7 +219,6 @@
                 <td class="weekend">28</td>
             </tr>
 
-            <!-- Semaine 5 -->
             <tr>
                 <td>29</td>
                 <td>30</td>
@@ -224,7 +232,7 @@
         </table>
 
     </div>
-</details>
+</div>
 
 </body>
 </html>

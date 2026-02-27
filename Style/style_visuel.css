@@ -1,12 +1,41 @@
-details {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #fafafa;
+
+
+/* ===== MENU BOUTONS ===== */
+.menu{
+    text-align:center;
+    margin:20px 0;
 }
 
-summary {
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
+.menu button{
+    padding:10px 20px;
+    margin:5px;
+    border:none;
+    border-radius:6px;
+    background:#1976d2;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
 }
+
+.menu button:hover{
+    background:#0d47a1;
+    transform:scale(1.05);
+}
+
+/* ===== MASQUER LES EXERCICES ===== */
+.exercice{
+    display:none;
+    margin:20px;
+}
+
+/* Animation */
+.exercice{
+    animation:fade 0.3s ease-in-out;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
