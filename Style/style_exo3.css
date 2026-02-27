@@ -1,0 +1,34 @@
+body{
+    background-color: #d9d9d9;
+    font-family: Arial, sans-serif;
+}
+
+table{
+    border-collapse: collapse;
+    margin: 30px auto;
+    background-color: #eeeeee;
+}
+
+th, td{
+    border: 1px solid #9e9e9e;
+    width: 45px;
+    height: 30px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Titre */
+.titre{
+    background-color: #5a5858;  
+    font-weight: normal;
+}
+
+/* Jours semaine */
+.jours th{
+    background-color: #8cc63f;
+}
+
+/* Week-end */
+.weekend{
+    background-color: #b7d78a;
+}

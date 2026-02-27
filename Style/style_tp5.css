@@ -1,8 +1,0 @@
-  .ecole-table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
-  .ecole-table td, .ecole-table th { border: 1px solid #ddd; padding: 10px; }
-  .bg-grey { background: #777; color: white; }
-  .bg-zone-a { background: #f39c12; color: white; }
-  .bg-zone-b { background: #3498db; color: white; }
-  .bg-zone-c { background: #2ecc71; color: white; }
-  .center-text { text-align: center; font-weight: bold; }
-  .label { font-weight: bold; background: #f9f9f9; }

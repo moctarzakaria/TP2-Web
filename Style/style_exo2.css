@@ -1,0 +1,34 @@
+.table-langages {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.table-langages caption {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.table-langages th,
+.table-langages td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: center;
+}
+
+.table-langages th {
+    background-color: #ddd;
+}
+
+.table-langages img {
+    display: block;
+    margin: auto;
+}
+
+.table-langages code {
+    background-color: #f4f4f4;
+    padding: 5px;
+    display: block;
+}
