@@ -8,7 +8,7 @@
         width: 100%;
         max-width: 1000px;
         margin: 30px auto;
-        background-color: white;
+        background-color: rgb(131, 61, 61);
     }
 
     th, td{
@@ -20,7 +20,7 @@
     }
 
     th{
-        color: white;
+        color: rgb(56, 15, 15);
         font-weight: bold;
     }
 
