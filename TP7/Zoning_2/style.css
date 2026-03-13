@@ -1,0 +1,39 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: monospace; font-size: 12px; }
+
+body { display: flex; flex-direction: column; height: 100vh; }
+
+#zone-haut {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+#conteneur {
+  display: flex;
+  flex: 1;
+}
+
+#zone-gauche {
+  background-color: #3498db;
+  color: white;
+  padding: 8px;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+#zone-milieu {
+  background-color: #2ecc71;
+  color: white;
+  padding: 8px;
+  flex: 1;
+}
+
+#zone-droite {
+  background-color: #e67e22;
+  color: white;
+  padding: 8px;
+  width: 130px;
+  flex-shrink: 0;
+}

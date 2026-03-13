@@ -1,0 +1,47 @@
+/* On retire les marges par défaut et on fixe la hauteur */
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: sans-serif;
+  /* La bordure noire fine tout autour du screen */
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+/* Zones Turquoise (Haut et Bas) */
+#haut, #bas {
+  background-color: #45a094;
+  padding: 5%;
+  font-size: 14px;
+}
+
+/* Zone Violette (Menu) */
+#menu {
+  background-color: #9b4d96;
+  color: white;
+  padding: 5% 5%;
+  font-size: 14;
+}
+
+/* Le conteneur blanc (prend tout l'espace central) */
+#conteneur-blanc {
+  flex: 1; /* Remplit l'espace entre le menu et le bas */
+  background-color: white;
+  padding: 20px 30px; /* L'espace blanc qui entoure le bloc orange */
+  display: flex;
+}
+
+/* Le bloc Orange (Milieu) */
+#milieu {
+  background-color: #f1b500;
+  flex: 1; /* S'étire pour remplir le conteneur blanc */
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Optionnel : petite bordure noire en haut du footer pour séparer du blanc */
+#bas {
+  border-top: 1% solid #000;
+}

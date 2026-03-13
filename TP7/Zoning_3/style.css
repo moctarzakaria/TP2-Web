@@ -1,0 +1,30 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: monospace; font-size: 12px; }
+
+body { display: flex; flex-direction: column; height: 100vh; }
+
+#conteneur {
+  display: flex;
+  flex: 1;
+}
+
+#gauche {
+  background-color: #27ae60;
+  color: white;
+  padding: 8px;
+  flex: 1;
+}
+
+#droite {
+  background-color: #8e44ad;
+  color: white;
+  padding: 8px;
+  flex: 1;
+}
+
+#bas {
+  background-color: #f1c40f;
+  color: #333;
+  padding: 8px;
+  height: 50px;
+  flex-shrink: 0;
+}
