@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 8 : Les Tableaux & Cours Bases JS</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --accent: #f59e0b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --code-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0, transparent 50%), url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+        }
+
+        h1 { color: var(--accent); text-align: center; margin-bottom: 30px; }
+        h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 40px; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
+        h3 { color: var(--primary); margin-top: 25px; }
+
+        .visual-tab {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            min-height: 60px;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--code-bg);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .cell span { font-size: 0.7rem; color: var(--primary); margin-bottom: 2px; }
+
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 20px; }
+
+        button {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        button:hover { background: var(--primary); }
+        
+        .status-bar {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th { background: rgba(99, 102, 241, 0.2); }
+
+        .course-section { line-height: 1.6; }
+        .course-section ul { padding-left: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>TP 8 : Fonctions Utilitaires Tableaux</h1>
+
+    <div class="status-bar">
+        <span>Taille Max (N) : <b id="display-n">0</b></span>
+        <span>Éléments remplis : <b id="display-rempli">0</b></span>
+    </div>
+
+    <div id="visual-container" class="visual-tab"></div>
+
+    <div class="controls">
+        <button onclick="testerInit0()">Ex 1 : Initialiser à 0</button>
+        <button onclick="testerInitVal()">Ex 2 : Initialiser à X</button>
+        <button onclick="testerRemplirAlea()">Ex 3 : Remplir Aléatoire</button>
+        <button onclick="testerRemplirPartiel()">Ex 4 : Remplir Partiel</button>
+        <button onclick="testerAfficherRempli()">Ex 5 : Log Remplis</button>
+        <button onclick="testerAfficherTout()">Ex 6 : Log Tout</button>
+        <button onclick="testerAfficherDebFin()">Ex 7 : Log Fenêtre</button>
+        <button onclick="testerUnElement()">Ex 8 : Ajouter 1 élément</button>
+        <button onclick="testerSaisie()">Ex 9 : Saisie Manuelle</button>
+    </div>
+    <p style="margin-top:20px; font-size: 0.8rem; opacity: 0.6;">* Les résultats des fonctions "Afficher" (Ex 5, 6, 7) sont visibles dans la <b>Console (F12)</b>.</p>
+</div>
+
+<div class="container course-section">
+    <h1>COURS 3 : LES BASES DU JAVASCRIPT</h1>
+    <p style="text-align: center; opacity: 0.7;">BTS SIO - Lycée Algoud-Laffemas - 27 Février 2023</p>
+
+    <h2>1. Structure de base d'un programme</h2>
+    [cite_start]<p>Lorsque le code JavaScript se trouve dans un fichier séparé (.js), la structure est la suivante[cite: 498, 530]:</p>
+    <pre>
+/* zone d'en-tête */
+/* déclaration des variables globales */
+/* définition des fonctions (function) */
+/* CORPS DU PROGRAMME (Instructions) */
+/* FIN */</pre>
+
+    [cite_start]<p>Dans une page Web, on utilise la balise <code>&lt;script&gt;</code> insérée entre <code>&lt;head&gt;</code> (pour le global/fonctions) ou <code>&lt;body&gt;</code> (pour les instructions)[cite: 527, 528, 529].</p>
+
+    <h2>2. Les Commentaires</h2>
+    <ul>
+        [cite_start]<li><code>//</code> : Commentaire sur une seule ligne[cite: 545].</li>
+        [cite_start]<li><code>/* ... */</code> : Commentaire sur plusieurs lignes[cite: 546, 547].</li>
+    </ul>
+    [cite_start]<p>Un bon commentaire doit expliquer l'utilité d'une variable ou d'un bloc, et non paraphraser le code[cite: 554, 556].</p>
+
+    <h2>3. Déclaration des Variables</h2>
+    [cite_start]<p>JavaScript est un langage <b>faiblement typé</b> : on ne précise pas le type à la déclaration, il est fixé à l'utilisation[cite: 570, 576, 577].</p>
+    <ul>
+        [cite_start]<li><b>let</b> : Déclare une variable à portée <b>locale</b> (recommandé)[cite: 634, 637].</li>
+        [cite_start]<li><b>var</b> : Déclare une variable à portée <b>globale</b>[cite: 632].</li>
+        [cite_start]<li><b>const</b> : Déclare une constante qui doit être initialisée immédiatement[cite: 639, 640].</li>
+    </ul>
+
+    <h2>4. Les Types de Données Primitifs</h2>
+    <table>
+        <tr><th>Type JS</th><th>Type Algo</th><th>Description</th></tr>
+        <tr><td>Number</td><td>Entier / Réel</td><td>Nombres (64 bits). [cite_start]Limite : ±2⁵³-1[cite: 660, 426].</td></tr>
+        [cite_start]<tr><td>BigInt</td><td>Entier long</td><td>Pour les entiers dépassant la limite de Number (suffixe 'n')[cite: 439, 440].</td></tr>
+        [cite_start]<tr><td>String</td><td>Chaîne</td><td>Texte entre " " ou ' ' (Unicode 16 bits)[cite: 442, 443, 444].</td></tr>
+        [cite_start]<tr><td>Boolean</td><td>Booléen</td><td>Valeurs <code>true</code> ou <code>false</code>[cite: 450].</td></tr>
+        [cite_start]<tr><td>Null / Undefined</td><td>-</td><td>Valeurs d'absence de donnée ou variable non définie[cite: 660].</td></tr>
+    </table>
+
+    <h2>5. Opérateurs Arithmétiques</h2>
+    [cite_start]<p>Priorités identiques aux mathématiques[cite: 454]. [cite_start]Opérateurs disponibles : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo), <code>**</code> (puissance)[cite: 455].</p>
+    [cite_start]<p><b>Note :</b> JavaScript tente toujours de retourner un résultat, même illogique (ex: <code>5 / "test"</code> donne <code>NaN</code>)[cite: 457, 458].</p>
+
+    <h2>6. Opérateurs Logiques et Affectation</h2>
+    <ul>
+        <li><b>Logique :</b> <code>==</code> (égal), <code>!=</code> (différent), <code>&&</code> (ET), <code>||</code> (OU), <code>!</code> (NON).</li>
+        <li><b>Incrémentation :</b> <code>i++</code> (après), <code>++i</code> (avant), <code>i--</code>.</li>
+        <li><b>Conditionnel :</b> <code>k = condition ? val1 : val2</code> (Ternaire).</li>
+    </ul>
+
+    <h2>7. Fonctions d'Entrée/Sortie</h2>
+    <ul>
+        <li><code>window.alert(message)</code> : Affiche un message.</li>
+        <li><code>window.confirm(message)</code> : Retourne true (OK) ou false (Annuler).</li>
+        <li><code>window.prompt(message, defaut)</code> : Retourne la saisie de l'utilisateur ou null.</li>
+    </ul>
+</div>
+
+<script>
+    /* ============================================================
+       LOGIQUE DU TP 8 (Tableaux)
+       ============================================================ */
+    let N = parseInt(prompt("Combien de cases pour le tableau ?", "10"));
+    if (isNaN(N) || N <= 0) N = 10;
+
+    let A = new Array(N);
+    let nbElemRempli = 0;
+
+    function rafraichirUI() {
+        document.getElementById('display-n').innerText = N;
+        document.getElementById('display-rempli').innerText = nbElemRempli;
+        const container = document.getElementById('visual-container');
+        container.innerHTML = '';
+        
+        for(let i = 0; i < N; i++) {
+            const val = (A[i] === undefined) ? "???" : A[i];
+            container.innerHTML += `<div class="cell"><span>${i}</span>${val}</div>`;
+        }
+    }
+
+    function initialiserTab1(tab) {
+        for(let i = 0; i < tab.length; i++) { tab[i] = 0; }
+        nbElemRempli = tab.length;
+    }
+
+    function initialiserTab2(tab, valeur) {
+        for(let i = 0; i < tab.length; i++) { tab[i] = valeur; }
+        nbElemRempli = tab.length;
+    }
+
+    function remplirTab1(tab, min, max) {
+        for(let i = 0; i < tab.length; i++) {
+            tab[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        nbElemRempli = tab.length;
+    }
+
+    function remplirTab2(tab, nbAAjouter, min, max) {
+        let fin = Math.min(nbElemRempli + nbAAjouter, tab.length);
+        for(let i = nbElemRempli; i < fin; i++) {
+            tab[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        nbElemRempli = fin;
+    }
+
+    function afficherTab1(tab) {
+        console.log("--- EX 5 : Éléments remplis ---");
+        for(let i = 0; i < nbElemRempli; i++) { console.log(`Index ${i} : ${tab[i]}`); }
+    }
+
+    function afficherTab2(tab) {
+        console.log("--- EX 6 : Tout le tableau ---");
+        for(let i = 0; i < tab.length; i++) { console.log(`Index ${i} : ${tab[i]}`); }
+    }
+
+    function afficherTab3(tab, deb, fin) {
+        console.log(`--- EX 7 : De ${deb} à ${fin} ---`);
+        for(let i = deb; i <= fin; i++) {
+            if(i >= 0 && i < tab.length) { console.log(`Index ${i} : ${tab[i]}`); }
+        }
+    }
+
+    function remplirElement(valeur) {
+        if(nbElemRempli >= N) return false;
+        A[nbElemRempli] = valeur;
+        nbElemRempli++;
+        return nbElemRempli;
+    }
+
+    function saisirTab() {
+        let nbSaisies = parseInt(prompt("Combien d'éléments voulez-vous saisir ?"));
+        for(let i = 0; i < nbSaisies; i++) {
+            if(nbElemRempli < N) {
+                let v = prompt(`Saisie ${i+1}/${nbSaisies} :`);
+                A[nbElemRempli] = v;
+                nbElemRempli++;
+            } else {
+                alert("Tableau plein !");
+                break;
+            }
+        }
+        return nbElemRempli;
+    }
+
+    // Fonctions de test
+    function testerInit0() { initialiserTab1(A); rafraichirUI(); }
+    function testerInitVal() { let v = prompt("Valeur d'initialisation ?"); initialiserTab2(A, v); rafraichirUI(); }
+    function testerRemplirAlea() { remplirTab1(A, 1, 100); rafraichirUI(); }
+    function testerRemplirPartiel() { let n = parseInt(prompt("Combien de cases à ajouter ?")); remplirTab2(A, n, 1, 100); rafraichirUI(); }
+    function testerAfficherRempli() { afficherTab1(A); alert("Regardez la console (F12)"); }
+    function testerAfficherTout() { afficherTab2(A); alert("Regardez la console (F12)"); }
+    function testerAfficherDebFin() { let d = parseInt(prompt("Index DEBUT :")); let f = parseInt(prompt("Index FIN :")); afficherTab3(A, d, f); alert("Regardez la console (F12)"); }
+    function testerUnElement() { let v = prompt("Valeur à ajouter ?"); let res = remplirElement(v); if(res === false) alert("Impossible : Tableau plein !"); rafraichirUI(); }
+    function testerSaisie() { saisirTab(); rafraichirUI(); }
+
+    rafraichirUI();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  text-align: center;
+  color: white;
+}
+
+#zone-haut {
+  background-color: #800080; /* Violet sombre */
+  padding: 5%;
+}
+
+#menu {
+  background-color: #0000ff; /* Bleu */
+  padding: 5%;
+}
+
+/* Le fond rose qui entoure la grille */
+#conteneur-central {
+  background-color: #ffc0cb; /* Rose */
+  padding: 20px;
+}
+
+#grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales */
+  gap: 2px; /* L'espace blanc entre les cases */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pz {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white; /* Pour le liseré blanc */
+}
+
+/* Couleurs par groupe */
+.rouge { background-color: #ff0000; }
+.orange { background-color: #ffa500; }
+.vert { background-color: #008000; }
+.marron { background-color: #a52a2a; }
+
+#zone-bas {
+  background-color: #c0c0c0; /* Gris */
+  color: #555;
+  padding: 30px;
+}

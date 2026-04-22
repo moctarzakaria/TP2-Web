@@ -1,0 +1,48 @@
+ body{
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    table{
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 1000px;
+        margin: 30px auto;
+        background-color: rgb(131, 61, 61);
+    }
+
+    th, td{
+        border: 1px solid #9b9090;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+    th{
+        color: rgb(56, 15, 15);
+        font-weight: bold;
+    }
+
+    .vacances{
+        background-color: #6c6c6c;
+        width: 180px;
+    }
+
+    .zoneA{
+        background-color: #e08a00;
+    }
+
+    .zoneB{
+        background-color: #2f75b5;
+    }
+
+    .zoneC{
+        background-color: #8cc63f;
+    }
+
+    .ligne{
+        background-color: #635959;
+        font-weight: bold;
+        text-align: left;
+    }

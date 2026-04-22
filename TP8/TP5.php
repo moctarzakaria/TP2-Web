@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacances scolaires 2017-2018</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Style/style_visuel.css">
+    <link rel="stylesheet" href="Style/style_exo1.css">
+    <link rel="stylesheet" href="Style/style_exo2.css">
+    <link rel="stylesheet" href="Style/style_exo3.css">
+</head>
+<script>
+function afficherExo(id){
+    document.querySelectorAll(".exercice").forEach(function(section){
+        section.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
+}
+</script>
+<body>
+    <div class="menu">
+    <button onclick="afficherExo('exo1')">Exercice 1</button>
+    <button onclick="afficherExo('exo2')">Exercice 2</button>
+    <button onclick="afficherExo('exo3')">Exercice 3</button>
+</div>
+<div id="exo1" class="exercice">
+<table>
+
+<tr>
+    <th class="vacances">Vacances</th>
+    <th class="zoneAA">Zone A</th>
+    <th class="zoneB">Zone B</th>
+    <th class="zoneC">Zone C</th>
+</tr>
+
+<tr>
+    <td class="ligne">Pré-rentrée des enseignants</td>
+    <td colspan="3">Reprise des cours : vendredi 1 septembre 2017</td>
+</tr>
+
+<tr>
+    <td class="ligne">Rentrée scolaire des élèves</td>
+    <td colspan="3">Reprise des cours : lundi 4 septembre 2017</td>
+</tr>
+
+<tr>
+    <td class="ligne">Vacances de la Toussaint</td>
+    <td colspan="3">
+        Fin des cours : samedi 21 octobre 2017<br>
+        Reprise des cours : lundi 6 novembre 2017
+    </td>
+</tr>
+
+<tr>
+    <td class="ligne">Vacances de Noël</td>
+    <td colspan="3">
+        Fin des cours : samedi 23 décembre 2017<br>
+        Reprise des cours : lundi 8 janvier 2018
+    </td>
+</tr>
+
+<tr>
+    <td class="ligne">Vacances d'hiver</td>
+    <td>
+        Fin des cours : samedi 10 février 2018<br>
+        Reprise des cours : lundi 26 février 2018
+    </td>
+    <td>
+        Fin des cours : samedi 24 février 2018<br>
+        Reprise des cours : lundi 12 mars 2018
+    </td>
+    <td>
+        Fin des cours : samedi 17 février 2018<br>
+        Reprise des cours : lundi 5 mars 2018
+    </td>
+</tr>
+
+<tr>
+    <td class="ligne">Vacances de printemps</td>
+    <td>
+        Fin des cours : samedi 7 avril 2018<br>
+        Reprise des cours : lundi 23 avril 2018
+    </td>
+    <td>
+        Fin des cours : samedi 21 avril 2018<br>
+        Reprise des cours : lundi 7 mai 2018
+    </td>
+    <td>
+        Fin des cours : samedi 14 avril 2018<br>
+        Reprise des cours : lundi 30 avril 2018
+    </td>
+</tr>
+
+<tr>
+    <td class="ligne">Vacances d'été</td>
+    <td colspan="3">
+        Fin des cours : samedi 7 juillet 2018
+    </td>
+</tr>
+</table>
+</div>
+</body>
+
+    <div id="exo2" class="exercice">
+        <summary>2. EXERCICE 2 : COMPARATIF DES LANGAGES DE SCRIPT</summary>
+        <div class="content">
+            <table class="table-langages">
+                <caption>Tableau comparatif des langages de script côté serveur</caption>
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Non abrégé</th>
+                        <th>Nom complet</th>
+                        <th>Année de sortie</th>
+                        <th>Site web de référence</th>
+                        <th>Exemple de code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="logo_php_large.png" target="_blank" title="Agrandir PHP">  <img src="Image/php.webp" alt="JS" width="100" height="60"></a></td>
+                        <td>Php</td><td>Hypertext Preprocessor</td><td>1995</td>
+                        <td><a href="https://php.net" target="_blank" title="Site PHP">php.net</a></td>
+                        <td><code>&lt;?php echo "Hello"; ?&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><a href="logo_jsp_large.png" target="_blank" title="Agrandir JSP">  <img src="Image/jsp.png" alt="JS" width="100" height="60"></a></td>
+                        <td>JSP</td><td>Jakarta Server Pages</td><td>1999</td>
+                        <td><a href="https://eclipse.org/jsp" target="_blank" title="Site JSP">eclipse.org</a></td>
+                        <td><code>&lt;% out.println("Hi"); %&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><a href="logo_asp_large.png" target="_blank" title="Agrandir ASP">  <img src="Image/asp.jpg" alt="JS" width="100" height="60"></a></td>
+                        <td>ASP</td><td>Active Server Pages</td><td>1996</td>
+                        <td><a href="https://microsoft.com" target="_blank" title="Site ASP">microsoft.com</a></td>
+                        <td><code>&lt;% Response.Write("Hi") %&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><a href="logo_ruby_large.png" target="_blank" title="Agrandir Ruby">  <img src="Image/ruby.png" alt="JS" width="100" height="60"></a></td>
+                        <td>Ruby</td><td>Ruby on Rails</td><td>1995</td>
+                        <td><a href="https://ruby-lang.org" target="_blank" title="Site Ruby">ruby-lang.org</a></td>
+                        <td><code>puts "Hello"</code></td>
+                    </tr>
+                    <tr>
+                        <td><a href="logo_perl_large.png" target="_blank" title="Agrandir Perl">  <img src="Image/perl.png" alt="JS" width="100" height="60"></a></td>
+                        <td>Perl</td><td>Practical Extraction and Report Language</td><td>1987</td>
+                        <td><a href="https://perl.org" target="_blank" title="Site Perl">perl.org</a></td>
+                        <td><code>print "Hello\n";</code></td>
+                    </tr>
+                    <tr>
+                        <td><a href="logo_python_large.png" target="_blank" title="Agrandir Python">  <img src="Image/Python.svg.png" alt="JS" width="100" height="60"></a></td>
+                        <td>Python</td><td>Python Software Foundation</td><td>1991</td>
+                        <td><a href="https://python.org" target="_blank" title="Site Python">python.org</a></td>
+                        <td><code>print("Hello")</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+   </div>
+
+<div id="exo3" class="exercice">
+    <summary>3. EXERCICE 3 : CALENDRIER AVRIL 2024</summary>
+
+    <div class="content">
+
+        <table>
+
+            <tr>
+                <th colspan="7" class="titre">Avril 2024</th>
+            </tr>
+
+            <tr class="jours">
+                <th>Lu</th>
+                <th>Ma</th>
+                <th>Me</th>
+                <th>Je</th>
+                <th>Ve</th>
+                <th>Sa</th>
+                <th>Di</th>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td class="weekend">6</td>
+                <td class="weekend">7</td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+                <td>11</td>
+                <td>12</td>
+                <td class="weekend">13</td>
+                <td class="weekend">14</td>
+            </tr>
+
+            <tr>
+                <td>15</td>
+                <td>16</td>
+                <td>17</td>
+                <td>18</td>
+                <td>19</td>
+                <td class="weekend">20</td>
+                <td class="weekend">21</td>
+            </tr>
+
+            <tr>
+                <td>22</td>
+                <td>23</td>
+                <td>24</td>
+                <td>25</td>
+                <td>26</td>
+                <td class="weekend">27</td>
+                <td class="weekend">28</td>
+            </tr>
+
+            <tr>
+                <td>29</td>
+                <td>30</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
