@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lafarge Holoconsult - Interface Devis</title>
+    <style>
+        /* Styles Futuristes */
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-red: #ff0055;
+            --dark-bg: #0a0e14;
+            --glass-bg: rgba(20, 25, 35, 0.85);
+        }
+
+        body { 
+            font-family: 'Orbitron', 'Segoe UI', sans-serif; 
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(0, 242, 255, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card { 
+            background: var(--glass-bg);
+            width: 100%;
+            max-width: 700px;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 { 
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+            margin-bottom: 30px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label { 
+            display: block; 
+            font-size: 0.8em;
+            color: var(--neon-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333; 
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 4px;
+            color: white;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        /* Container du Devis */
+        #devis-container { 
+            display: none;
+            margin-top: 40px; 
+            padding: 20px;
+            border: 1px solid var(--neon-red);
+            background: rgba(255, 0, 85, 0.05);
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-devis { 
+            border-bottom: 1px solid var(--neon-red); 
+            margin-bottom: 20px; 
+            padding-bottom: 10px;
+        }
+
+        .header-devis h2 { color: var(--neon-red); margin: 0; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        td, th { 
+            padding: 15px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+
+        th { color: var(--neon-blue); text-align: left; text-transform: uppercase; font-size: 0.8em; }
+
+        .total-row { 
+            color: var(--neon-red);
+            font-size: 1.5em;
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        /* Petit effet de scan line futuriste */
+        #devis-container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--neon-red);
+            opacity: 0.3;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>System Console v2.6</h1>
+    
+    <div class="form-group">
+        <label>Zone Surface (m²) :</label>
+        <input type="number" id="surface" placeholder="0.00">
+    </div>
+    
+    <div class="form-group">
+        <label>Densité Épaisseur (cm) :</label>
+        <input type="number" id="epaisseur" placeholder="Min 15 - Max 35">
+    </div>
+    
+    <button onclick="genererDevis()">Générer Analyse Devis</button>
+
+    <div id="devis-container">
+        <div class="header-devis">
+            <h2>REPORT_ID: #<span id="num-devis"></span></h2>
+            <p style="font-size: 0.7em; opacity: 0.7;">PROTOCOLE LAFARGE SYSTEM v4.0</p>
+        </div>
+        
+        <table>
+            <thead>
+                <tr><th>Paramètre</th><th>Données Système</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Masse Béton Totale</td><td id="out-vol"></td></tr>
+                <tr><td>Charge Ciment (Tonnes)</td><td id="out-ciment"></td></tr>
+                <tr><td>Unités Transport (9m³)</td><td id="out-camions"></td></tr>
+                <tr><td>Crédit HT</td><td id="out-prix-beton"></td></tr>
+                <tr><td>Frais Logistiques HT</td><td id="out-prix-trans"></td></tr>
+                <tr><td>Taxe TVA (20%)</td><td id="out-tva"></td></tr>
+                <tr class="total-row"><td>TOTAL TTC</td><td id="out-ttc"></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function genererDevis() {
+    const S = parseFloat(document.getElementById('surface').value);
+    const e = parseFloat(document.getElementById('epaisseur').value);
+
+    if(isNaN(S) || e < 15 || e > 35) {
+        alert("ERREUR CRITIQUE : Paramètres hors limites (15-35cm)");
+        return;
+    }
+
+    const volumeReel = S * (e / 100);
+    const nbCamions = Math.ceil(volumeReel / 9);
+    const volumeFacture = nbCamions * 9;
+    const cimentTonne = (volumeReel * 350) / 1000;
+
+    const prixBetonHT = volumeFacture * 91;
+    const prixTransportHT = nbCamions * 140;
+    const totalHT = prixBetonHT + prixTransportHT;
+    const tva = totalHT * 0.20;
+    const totalTTC = totalHT + tva;
+
+    document.getElementById('num-devis').innerText = Math.floor(Math.random() * 999999);
+    document.getElementById('out-vol').innerText = volumeReel.toFixed(2) + " m³";
+    document.getElementById('out-ciment').innerText = cimentTonne.toFixed(2) + " t";
+    document.getElementById('out-camions').innerText = nbCamions;
+    document.getElementById('out-prix-beton').innerText = prixBetonHT.toFixed(2) + " CRD";
+    document.getElementById('out-prix-trans').innerText = prixTransportHT.toFixed(2) + " CRD";
+    document.getElementById('out-tva').innerText = tva.toFixed(2) + " CRD";
+    document.getElementById('out-ttc').innerText = totalTTC.toFixed(2) + " CRD";
+
+    document.getElementById('devis-container').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

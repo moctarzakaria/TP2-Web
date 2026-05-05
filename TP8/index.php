@@ -199,7 +199,7 @@
 
     <header>
         <div class="logo-container">
-            <img src="Image/perl.png" alt="Mon Logo">
+            <img src="Image/zak.png" alt="Mon Logo">
         </div>
 
         <nav>
@@ -210,8 +210,11 @@
                 for ($i = 1; $i <= 7; $i++) {
                     echo "<li><a href='?page=tp$i'>TP$i</a></li>";
                 }
-                // Ajout manuel du TP9a (saute le 8)
+                // Ajout manuel du TP9a et TP9b
                 echo "<li><a href='?page=tp9a'>TP9a</a></li>";
+                echo "<li><a href='?page=tp9b'>TP9b</a></li>";
+                echo "<li><a href='?page=tp6a'>TP6a</a></li>";
+                echo "<li><a href='?page=tp10'>TP10</a></li>
                 ?>
             </ul>
         </nav>
@@ -222,17 +225,19 @@
             <?php
             $currentPage = isset($_GET['page']) ? strtolower($_GET['page']) : '';
             
-            // Configuration du menu latéral
+            // Configuration du menu latéral mise à jour avec TP9b
             $menu_exos = [
                 'tp4' => 3,
                 'tp5' => 3,
                 'tp7' => 7,
-                'tp9a' => 1 // Modifie le nombre d'exos si besoin pour le TP9a
+                'tp9a' => 1,
+                'tp9b' => 1,
+                'tp6a' => 1,
+                'tp10' => 1,
             ];
 
             if (array_key_exists($currentPage, $menu_exos)) {
                 echo "<h3>Exercices " . strtoupper($currentPage) . "</h3>";
-                // Optionnel : tu peux ajouter ici une boucle pour lister les exos spécifiques au TP
             } else {
                 echo "<h3>Informations</h3>";
                 echo "<p style='text-align:center; color: #94a3b8; font-size: 0.8rem;'>Sélectionnez un TP pour voir les détails.</p>";

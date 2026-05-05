@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu du Mémory - BTS SIO</title>
+    <style>
+        /* ÉTAPE 3 : Configuration de base et responsive [cite: 72, 75, 78] */
+        html, body {
+            width: 100%;
+            height: 100%;
+            min-width: 600px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        /* Plateau de jeu : 5 images par ligne sur 4 lignes [cite: 72] */
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 100px); /* 5 colonnes */
+            grid-template-rows: repeat(4, 100px);    /* 4 lignes */
+            gap: 10px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        /* Style des cartes [cite: 64, 66, 81] */
+        .card {
+            width: 100px;
+            height: 100px;
+            border: solid 1px black; /* Bordure demandée [cite: 66] */
+            background-color: #2c3e50; /* Couleur pour "cacher" l'image [cite: 81] */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        /* Couleur différente au survol [cite: 84] */
+        .card:hover {
+            background-color: #34495e;
+        }
+
+        /* Style des images à l'intérieur  */
+        .card img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        /* État quand une carte est trouvée */
+        .matched {
+            background-color: #ecf0f1 !important;
+            cursor: default;
+            border-color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jeu du Mémory</h1>
+
+    <div id="game-board">
+        </div>
+
+    <script>
+        /* LOGIQUE ANTI-TRICHE : 
+           Le nom des images n'est pas dans le HTML. 
+           Il est stocké dans un tableau mélangé en mémoire JS.
+        */
+
+        // Initialisation des 10 paires d'images [cite: 26, 40, 45]
+        const imageNames = [
+            'img1.png', 'img2.png', 'img3.png', 'img4.png', 'img5.png',
+            'img6.png', 'img7.png', 'img8.png', 'img9.png', 'img10.png'
+        ];
+        
+        // On double le tableau pour avoir les paires (20 cartes) 
+        let deck = [...imageNames, ...imageNames];
+
+        // Mélange aléatoire (Algorithme de Fisher-Yates)
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+
+        const board = document.getElementById('game-board');
+        let flippedCards = [];
+        let lockBoard = false;
+
+        // Création des éléments HTML du plateau
+        function createBoard() {
+            deck.forEach((image, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                // On stocke seulement l'index, pas le nom de l'image pour éviter la triche
+                card.dataset.index = index; 
+                card.addEventListener('click', flipCard);
+                board.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this.classList.contains('matched')) return;
+            if (flippedCards.length > 0 && flippedCards[0].element === this) return;
+
+            // ANTI-TRICHE : On injecte l'image SEULEMENT au moment du clic [cite: 82]
+            const index = this.dataset.index;
+            const imgElement = document.createElement('img');
+            imgElement.src = `assets/Image/${deck[index]}`; // Chemin selon l'arborescence [cite: 17]
+            this.appendChild(imgElement);
+            this.style.backgroundColor = "white";
+
+            flippedCards.push({ element: this, name: deck[index] });
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            lockBoard = true;
+            const [card1, card2] = flippedCards;
+
+            if (card1.name === card2.name) {
+                // Succès : on laisse les images et on marque comme complété
+                card1.element.classList.add('matched');
+                card2.element.classList.add('matched');
+                resetTurn();
+            } else {
+                // Échec : on retire les images du DOM après 1 seconde pour empêcher l'inspection [cite: 80]
+                setTimeout(() => {
+                    card1.element.innerHTML = "";
+                    card2.element.innerHTML = "";
+                    card1.element.style.backgroundColor = "#2c3e50";
+                    card2.element.style.backgroundColor = "#2c3e50";
+                    resetTurn();
+                }, 1000);
+            }
+        }
+
+        function resetTurn() {
+            flippedCards = [];
+            lockBoard = false;
+        }
+
+        // Lancement du jeu
+        createBoard();
+
+        // Bloque le clic droit sur le plateau pour compliquer l'accès à l'inspecteur d'éléments
+        board.oncontextmenu = (e) => e.preventDefault();
+    </script>
+</body>
+</html>
