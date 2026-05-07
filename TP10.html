@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Lafarge Holosystems - Devis Futuriste v5.0</title>
+    <title>Lafarge Holosystems - Devis Complet v6.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,9 +16,9 @@
 
         /* Style pour l'impression / Téléchargement PDF */
         @media print {
-            .input-panel, .action-buttons, .main-btn, .footer-note { display: none !important; }
-            body { background: white !important; color: black !important; }
-            #devis-final { display: block !important; border: none !important; width: 100% !important; background: white !important; color: black !important; box-shadow: none !important; }
+            .input-panel, .action-buttons, .main-btn { display: none !important; }
+            body { background: white !important; color: black !important; padding: 0; }
+            #devis-final { display: block !important; border: none !important; width: 100% !important; background: white !important; color: black !important; box-shadow: none !important; margin: 0; padding: 10mm; }
             .huge-title, th, .grand-total, canvas { color: black !important; border-color: black !important; }
             .box { border-left: 3px solid black !important; background: #f0f0f0 !important; color: black !important; }
             td { border-bottom: 1px solid #ccc !important; color: black !important; }
@@ -29,22 +29,26 @@
             background: rgba(255, 255, 255, 0.05);
             padding: 25px; border-radius: 15px;
             border: 1px solid rgba(0, 242, 255, 0.3);
-            max-width: 600px; margin: 0 auto 30px;
+            max-width: 700px; margin: 0 auto 30px;
             backdrop-filter: blur(10px);
         }
 
         h1 { font-family: 'Orbitron'; color: var(--neon-cyan); text-align: center; margin-top: 0; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
         input {
-            width: 100%; padding: 12px; margin: 10px 0;
+            width: 100%; padding: 12px; margin: 5px 0;
             background: rgba(0,0,0,0.4); border: 1px solid #333;
             color: var(--neon-cyan); border-radius: 5px; box-sizing: border-box; outline: none;
         }
 
+        .full-width { grid-column: span 2; }
+
         .main-btn {
             width: 100%; padding: 15px; background: transparent;
             border: 2px solid var(--neon-cyan); color: var(--neon-cyan);
-            font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; margin-top: 10px;
+            font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; margin-top: 20px;
         }
 
         .main-btn:hover { background: var(--neon-cyan); color: var(--deep-space); box-shadow: 0 0 20px var(--neon-cyan); }
@@ -61,7 +65,7 @@
         .huge-title { font-family: 'Orbitron'; font-size: 50px; color: var(--neon-cyan); margin: 0; }
         
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .box { padding: 15px; border-left: 3px solid var(--neon-cyan); background: var(--glass); }
+        .box { padding: 15px; border-left: 3px solid var(--neon-cyan); background: var(--glass); line-height: 1.5; }
 
         table { width: 100%; border-collapse: collapse; margin: 30px 0; }
         th { font-family: 'Orbitron'; background: rgba(0, 242, 255, 0.1); padding: 15px; text-align: left; color: var(--neon-cyan); font-size: 0.8em; }
@@ -86,39 +90,48 @@
 <body>
 
 <div class="input-panel">
-    <h1>LAFARGE SYSTÈME v5.0</h1>
-    <input type="text" id="client-name" placeholder="NOM DU CLIENT">
-    <input type="number" id="surface" placeholder="SURFACE À COUVRIR (M²)">
-    <input type="number" id="epaisseur" placeholder="ÉPAISSEUR DALLE (15-35 CM)">
-    <button class="main-btn" onclick="genererDevis()">GÉNÉRER ANALYSE</button>
+    <h1>UNITÉ DE SAISIE CLIENT</h1>
+    <div class="form-grid">
+        <input type="text" id="client-prenom" placeholder="Prénom">
+        <input type="text" id="client-nom" placeholder="Nom">
+        <input type="text" id="client-adresse" placeholder="Adresse complète" class="full-width">
+        <input type="email" id="client-mail" placeholder="Email (ex: client@mail.com)">
+        <input type="tel" id="client-tel" placeholder="Téléphone">
+        <input type="number" id="surface" placeholder="Surface (M²)">
+        <input type="number" id="epaisseur" placeholder="Épaisseur (15-35 CM)">
+    </div>
+    <button class="main-btn" onclick="genererDevis()">GÉNÉRER LE DOSSIER</button>
 </div>
 
 <div id="devis-final">
     <div class="devis-header">
         <h2 class="huge-title">DEVIS</h2>
         <div style="text-align: right">
-            <span style="font-size: 1.2em">ID_REF: #<span id="out-num"></span></span><br>
-            TIMESTAMP: <span id="out-date"></span>
+            <span style="font-size: 1.2em">REF_ID: #<span id="out-num"></span></span><br>
+            STAMP: <span id="out-date"></span>
         </div>
     </div>
 
     <div class="info-grid">
         <div class="box">
             <strong>ÉMETTEUR :</strong><br>
-            LAFARGE HOLOSYSTEMS<br>
-            District Industriel - Secteur 7<br>
-            contact@lafarge.corp
+            LAFARGE HOLOSYSTEMS CORP.<br>
+            Unit 01 - Secteur Industriel<br>
+            69000 Lyon, France<br>
+            contact@lafarge.future
         </div>
         <div class="box">
             <strong>DESTINATAIRE :</strong><br>
-            CLIENT: <span id="out-client-name" style="color:var(--neon-cyan)"></span><br>
-            Statut: Validé par le système
+            <span id="out-full-name" style="color:var(--neon-cyan); font-weight: bold;"></span><br>
+            <span id="out-address"></span><br>
+            TEL: <span id="out-tel"></span><br>
+            MAIL: <span id="out-mail"></span>
         </div>
     </div>
 
     <table>
         <thead>
-            <tr><th>COMPOSANT</th><th>QUANTITÉ</th><th>PRIX UNIT.</th><th>TOTAL HT</th></tr>
+            <tr><th>DÉSIGNATION</th><th>QUANTITÉ</th><th>UNITÉ HT</th><th>TOTAL HT</th></tr>
         </thead>
         <tbody id="table-content"></tbody>
     </table>
@@ -126,11 +139,11 @@
     <div class="grand-total">TOTAL TTC : <span id="out-ttc"></span></div>
 
     <div style="margin-top: 20px; font-size: 0.8em; opacity: 0.6;">
-        NOTE TECHNIQUE : Dosage 350kg/m³ | Ciment requis : <span id="out-ciment"></span> tonnes.
+        DOSAGE SYSTÈME : 350kg/m³ | Masse ciment totale : <span id="out-ciment"></span> tonnes.
     </div>
 
     <div class="signature-area">
-        <p style="font-family: 'Orbitron'; font-size: 0.7em; color: var(--neon-cyan);">SIGNATURE CLIENT REQUISE</p>
+        <p style="font-family: 'Orbitron'; font-size: 0.7em; color: var(--neon-cyan);">VALIDATION CLIENT REQUISE</p>
         <canvas id="sig-canvas" width="300" height="100"></canvas>
     </div>
 
@@ -144,13 +157,11 @@
     let aSigne = false;
     let canvas, ctx;
 
-    // Initialisation sécurisée du canvas
     function initSignature() {
         canvas = document.getElementById('sig-canvas');
         ctx = canvas.getContext('2d');
         let drawing = false;
 
-        // Reset si déjà utilisé
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         aSigne = false;
 
@@ -159,15 +170,14 @@
         
         function draw(e) {
             if (!drawing) return;
-            aSigne = true; // L'utilisateur a commencé à signer
+            aSigne = true;
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#00f2ff';
 
-            // Gestion souris et tactile
             const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+            const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -175,22 +185,29 @@
             ctx.moveTo(x, y);
         }
 
-        canvas.addEventListener('mousedown', startPos);
-        canvas.addEventListener('mouseup', finishedPos);
-        canvas.addEventListener('mousemove', draw);
+        canvas.onmousedown = startPos;
+        canvas.onmouseup = finishedPos;
+        canvas.onmousemove = draw;
         
-        canvas.addEventListener('touchstart', (e) => { startPos(e.touches[0]); e.preventDefault(); }, {passive: false});
-        canvas.addEventListener('touchend', finishedPos);
-        canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); }, {passive: false});
+        canvas.ontouchstart = (e) => { startPos(e.touches[0]); e.preventDefault(); };
+        canvas.ontouchend = finishedPos;
+        canvas.ontouchmove = (e) => { draw(e.touches[0]); e.preventDefault(); };
     }
 
     function genererDevis() {
-        const client = document.getElementById('client-name').value;
+        // Récupération des nouveaux champs
+        const prenom = document.getElementById('client-prenom').value;
+        const nom = document.getElementById('client-nom').value;
+        const adresse = document.getElementById('client-adresse').value;
+        const mail = document.getElementById('client-mail').value;
+        const tel = document.getElementById('client-tel').value;
+        
         const s = parseFloat(document.getElementById('surface').value);
         const e = parseFloat(document.getElementById('epaisseur').value);
 
-        if(!client || isNaN(s) || isNaN(e) || e < 15 || e > 35) {
-            alert("❌ ERREUR : Veuillez remplir tous les champs. L'épaisseur doit être entre 15 et 35 cm.");
+        // Validation stricte
+        if(!prenom || !nom || !adresse || isNaN(s) || isNaN(e) || e < 15 || e > 35) {
+            alert("⚠️ ERREUR : Informations client incomplètes ou paramètres béton hors limites.");
             return;
         }
 
@@ -202,47 +219,41 @@
         const prixHT = (volFacture * 91) + (nbCamions * 140);
         const ttc = prixHT * 1.2;
 
+        // Affichage dans le devis
         document.getElementById('devis-final').style.display = 'block';
-        document.getElementById('out-client-name').innerText = client.toUpperCase();
+        document.getElementById('out-full-name').innerText = prenom + " " + nom.toUpperCase();
+        document.getElementById('out-address').innerText = adresse;
+        document.getElementById('out-tel').innerText = tel;
+        document.getElementById('out-mail').innerText = mail;
+        
         document.getElementById('out-num').innerText = Math.floor(Math.random()*99999);
         document.getElementById('out-date').innerText = new Date().toLocaleDateString();
         
         document.getElementById('table-content').innerHTML = `
-            <tr><td>BÉTON ARMÉ 350kg/m³</td><td>${volFacture} m³</td><td>91.00 €</td><td>${(volFacture*91).toFixed(2)} €</td></tr>
-            <tr><td>TRANSPORT LOGISTIQUE</td><td>${nbCamions} Livr.</td><td>140.00 €</td><td>${(nbCamions*140).toFixed(2)} €</td></tr>
+            <tr><td>BÉTON ARMÉ (Mélange standard)</td><td>${volFacture} m³</td><td>91.00 €</td><td>${(volFacture*91).toFixed(2)} €</td></tr>
+            <tr><td>UNITÉS DE TRANSPORT (Camions 9m³)</td><td>${nbCamions}</td><td>140.00 €</td><td>${(nbCamions*140).toFixed(2)} €</td></tr>
         `;
 
         document.getElementById('out-ttc').innerText = ttc.toFixed(2) + " €";
         document.getElementById('out-ciment').innerText = ciment.toFixed(2);
 
-        // On initialise la signature dès que le devis apparaît
         initSignature();
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo({ top: document.getElementById('devis-final').offsetTop, behavior: 'smooth' });
     }
 
     function sauvegarderDevis() {
-        if(!aSigne) {
-            alert("⚠️ SIGNATURE MANQUANTE : Veuillez signer avant de sauvegarder.");
-            return;
-        }
+        if(!aSigne) { alert("⚠️ SIGNATURE REQUISE"); return; }
         const data = {
-            client: document.getElementById('out-client-name').innerText,
-            total: document.getElementById('out-ttc').innerText,
-            date: document.getElementById('out-date').innerText
+            client: document.getElementById('out-full-name').innerText,
+            montant: document.getElementById('out-ttc').innerText
         };
-        localStorage.setItem('sauvegarde_devis', JSON.stringify(data));
-        alert("✅ SYSTÈME : Devis archivé avec succès.");
+        localStorage.setItem('sauvegarde_lafarge', JSON.stringify(data));
+        alert("💾 ARCHIVAGE TERMINÉ");
     }
 
     function telechargerFacture() {
-        if(!aSigne) {
-            alert("⚠️ SIGNATURE MANQUANTE : Veuillez signer pour authentifier le document.");
-            return;
-        }
-        alert("📥 PRÉPARATION DU PDF : Choisissez 'Enregistrer au format PDF' dans la fenêtre suivante.");
-        setTimeout(() => {
-            window.print();
-        }, 500);
+        if(!aSigne) { alert("⚠️ SIGNATURE REQUISE"); return; }
+        window.print();
     }
 </script>
 
