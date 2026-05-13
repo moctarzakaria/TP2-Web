@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 9 - BTS SIO - Rendre dynamiques ses pages Web</title>
+    <style>
+        :root {
+            --neon-blue: #00d4ff;
+            --neon-purple: #9d00ff;
+            --neon-green: #b4ff00;
+            --bg-dark: #0a0b10;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px;
+            margin: 0;
+        }
+
+        section {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h2 { color: var(--neon-blue); text-transform: uppercase; border-left: 4px solid var(--neon-purple); padding-left: 15px; }
+
+        /* --- EXERCICE 1: POPUP (CONSIGNE: TITRE + TEXTE + IMAGE) --- */
+        .term { color: var(--neon-blue); cursor: help; font-weight: bold; text-decoration: underline dotted; position: relative; }
+        
+        #popup-def {
+            display: none; 
+            position: absolute; 
+            background: rgba(15, 15, 25, 0.98);
+            border: 2px solid var(--neon-blue); 
+            padding: 15px; 
+            width: 280px; 
+            z-index: 1000;
+            border-radius: 12px; 
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+            pointer-events: none;
+        }
+
+        #popup-def h4 { color: var(--neon-blue); margin: 0 0 10px 0; text-transform: uppercase; border-bottom: 1px solid var(--neon-purple); padding-bottom: 5px; }
+        #popup-def p { font-size: 0.9em; margin-bottom: 10px; line-height: 1.4; }
+        #popup-def img { width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
+
+        /* EXERCICE 2: FORMULAIRE */
+        input, select, button { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px; border-radius: 5px; margin: 5px; }
+        button { background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); border: none; cursor: pointer; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: rgba(157, 0, 255, 0.2); color: var(--neon-blue); padding: 12px; }
+        td { border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; text-align: center; }
+
+        /* EXERCICE 3: COMPTE À REBOURS */
+        .countdown-flex { display: flex; justify-content: center; gap: 15px; }
+        .time-box { background: #000; border: 2px solid var(--neon-purple); padding: 15px; border-radius: 10px; min-width: 70px; text-align: center; }
+        .time-val { font-size: 2em; display: block; text-shadow: 0 0 10px var(--neon-purple); }
+
+        /* EXERCICE 4: CALENDRIER */
+        .cal-table { border-collapse: collapse; margin: 20px auto; color: white; }
+        .cal-header { background: var(--main-color, #333); padding: 10px; font-weight: bold; text-align: center; }
+        .cal-cell { padding: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .weekend-bg { background: rgba(180, 255, 0, 0.15); color: var(--neon-green); }
+        .size-grand { transform: scale(1.1); margin: 40px auto; }
+    </style>
+</head>
+<body>
+
+    <section>
+        <h2>Exercice 1 : Popups de définition (Map JS)</h2>
+        <p>
+            Le <span class="term" data-key="Lorem">Lorem</span> est un texte factice utilisé dans la mise en page. 
+            Certains sites comme <span class="term" data-key="PHP">PHP</span> (Wikipédia) utilisent des systèmes dynamiques.
+        </p>
+        <div id="popup-def"></div>
+    </section>
+
+    <section>
+        <h2>Exercice 2 : Formulaire JPO Dynamique</h2>
+        <form id="jpoForm">
+            <input type="text" id="nom" placeholder="Nom" required>
+            <input type="text" id="prenom" placeholder="Prénom" required>
+            <select id="etude">
+                <option value="Bac pro">Bac pro</option>
+                <option value="STI">STI</option>
+                <option value="STMG">STMG</option>
+                <option value="Général">Général</option>
+            </select>
+            <button type="submit">AJOUTER AU TABLEAU</button>
+        </form>
+        <table id="resultTable">
+            <thead><tr><th>NOM</th><th>PRÉNOM</th><th>ÉTUDE SUIVIE</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Exercice 3 : Compte à Rebours (Rugby World Cup)</h2>
+        <div class="countdown-flex">
+            <div class="time-box"><span id="days" class="time-val">0</span> JOURS</div>
+            <div class="time-box"><span id="hours" class="time-val">0</span> HEURES</div>
+            <div class="time-box"><span id="mins" class="time-val">0</span> MINS</div>
+            <div class="time-box"><span id="secs" class="time-val">0</span> SEC</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Exercice 4 : Calendrier Paramétrable</h2>
+        <div id="calendar-area"></div>
+    </section>
+
+    <script>
+        /* --- EXERCICE 1 : MAP AVEC TITRE, EXPLICATION, IMAGE --- */
+        const dicoDefinitions = new Map([
+            ["Lorem", { 
+                titre: "Lorem Ipsum", 
+                explication: "Texte factice utilisé dans la composition et la mise en page avant impression.", 
+                image: "https://via.placeholder.com/250x120/00d4ff/000000?text=Compo+Impression" 
+            }],
+            ["PHP", { 
+                titre: "Langage PHP", 
+                explication: "Hypertext Preprocessor, un langage de scripts utilisé pour rendre les pages web dynamiques.", 
+                image: "https://via.placeholder.com/250x120/9d00ff/ffffff?text=Serveur+Web" 
+            }]
+        ]);
+
+        const popup = document.getElementById('popup-def');
+
+        document.querySelectorAll('.term').forEach(el => {
+            el.addEventListener('mouseover', (e) => {
+                const key = el.getAttribute('data-key');
+                const data = dicoDefinitions.get(key);
+                
+                if(data) {
+                    // Construction des 3 éléments demandés 
+                    popup.innerHTML = `
+                        <h4>${data.titre}</h4>
+                        <p>${data.explication}</p>
+                        <img src="${data.image}" alt="${data.titre}">
+                    `;
+                    popup.style.display = 'block';
+                    popup.style.left = (e.pageX + 10) + 'px';
+                    popup.style.top = (e.pageY + 10) + 'px';
+                }
+            });
+            el.addEventListener('mouseout', () => popup.style.display = 'none');
+        });
+
+        /* --- EXERCICE 2 : AJOUT DYNAMIQUE TABLEAU --- */
+        document.getElementById('jpoForm').onsubmit = (e) => {
+            e.preventDefault();
+            const tableBody = document.getElementById('resultTable').tBodies[0];
+            const row = tableBody.insertRow();
+            row.insertCell(0).innerText = document.getElementById('nom').value.toUpperCase();
+            row.insertCell(1).innerText = document.getElementById('prenom').value;
+            row.insertCell(2).innerText = document.getElementById('etude').value;
+            e.target.reset();
+        };
+
+        /* --- EXERCICE 3 : SETTIMEOUT  --- */
+        const dateCible = new Date("Sep 8, 2026 21:00:00").getTime(); 
+        function refreshCountdown() {
+            const diff = dateCible - new Date().getTime();
+            document.getElementById('days').innerText = Math.floor(diff / 86400000);
+            document.getElementById('hours').innerText = Math.floor((diff % 86400000) / 3600000);
+            document.getElementById('mins').innerText = Math.floor((diff % 3600000) / 60000);
+            document.getElementById('secs').innerText = Math.floor((diff % 60000) / 1000);
+            setTimeout(refreshCountdown, 1000); // Récursion via setTimeout 
+        }
+        refreshCountdown();
+
+        /* --- EXERCICE 4 : FONCTION CALENDRIER PARAMÉTRABLE --- */
+        function genererCalendrier(premierJour, mois, annee, taille = "moyen", couleur = "#00d4ff") {
+            const moisNoms = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+            const joursLabels = ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"];
+            const totalJours = new Date(annee, mois, 0).getDate();
+            
+            let tableHtml = `<table class="cal-table size-${taille}" style="--main-color: ${couleur}; border: 1px solid ${couleur}">`;
+            tableHtml += `<tr><th colspan="7" class="cal-header">${moisNoms[mois-1]} ${annee}</th></tr><tr>`;
+            joursLabels.forEach((j, i) => tableHtml += `<td class="cal-cell ${i >= 5 ? 'weekend-bg' : ''}"><strong>${j}</strong></td>`);
+            tableHtml += "</tr><tr>";
+
+            // Espaces vides
+            for (let i = 1; i < premierJour; i++) tableHtml += "<td></td>";
+
+            let colActuelle = premierJour;
+            for (let d = 1; d <= totalJours; d++) {
+                tableHtml += `<td class="cal-cell ${colActuelle >= 6 ? 'weekend-bg' : ''}">${d}</td>`;
+                if (colActuelle === 7 && d < totalJours) { 
+                    tableHtml += "</tr><tr>"; 
+                    colActuelle = 1; 
+                } else { 
+                    colActuelle++; 
+                }
+            }
+            return tableHtml + "</tr></table>";
+        }
+
+        // Appel automatique selon l'exemple (Avril 2024 commence un Lundi=1) 
+        document.getElementById('calendar-area').innerHTML = genererCalendrier(1, 4, 2024, "grand", "#00d4ff");
+    </script>
+</body>
+</html>
