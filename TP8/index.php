@@ -214,7 +214,7 @@
                 echo "<li><a href='?page=tp9a'>TP9a</a></li>";
                 echo "<li><a href='?page=tp9b'>TP9b</a></li>";
                 echo "<li><a href='?page=tp6a'>TP6a</a></li>";
-                echo "<li><a href='?page=tp10'>TP10</a></li>
+                echo "<li><a href='?page=tp10'>TP10</a></li>";
                 ?>
             </ul>
         </nav>
